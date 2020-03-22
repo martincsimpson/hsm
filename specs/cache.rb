@@ -16,7 +16,7 @@ describe "Cache" do
       result = Cache.get_or_set(cache_key) { cache_string }
     
       # then
-      expect(result).to eq("hhh")
+      expect(result).to eq("def")
     end
     
   end
