@@ -67,7 +67,7 @@ class GitHubSource
   def fetch
     response = Client.query(RepositoryQuery)
     
-    response.data.viewer.repositories.nodes.map do |github_repository|
+    response.data.search.nodes.map do |github_repository|
       Library.from_github(github_repository)
     end
   end
@@ -196,7 +196,7 @@ describe "GitHubSource" do
       results = source.fetch
       
       # then
-      expect(results.count).to eq(7)
+      expect(results.count).to eq(50)
     end
   end  
 end
