@@ -100,5 +100,17 @@ describe "LibraryRepository" do
       expect(result.first.language).to eq("ruby")
     end
     
+    it 'should raise a timeout error if the time is exceeded' do
+      # given
+      library = double("Library", language: "ruby")
+      source = double("GitHubLibrarySource", name: :github, fetch: [library])
+      repository = Library::Repository.new(sources: [source])
+      
+      # when
+      
+      # then
+      expect(library.all(language: "ruby", timeout: 1)).to raise_error(Timeout::Error)
+    end
+    
   end
 end
