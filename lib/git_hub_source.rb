@@ -31,11 +31,10 @@ class GitHubSource
     
   def fetch language:
     raise "Language is required" if language.nil?
-    
     query_string = "language:#{language} sort:updated_at"
     
     response = Client.query(RepositoryQuery, variables: { queryString: query_string})
-        
+    
     response.data.search.nodes.map do |github_repository|
       Library.from_github(github_repository)
     end
