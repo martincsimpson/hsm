@@ -1,6 +1,7 @@
 require "graphql/client"
 require "graphql/client/http"
 require "rest-client"
+require 'timecop'
 
 require './lib/cache'
 
@@ -17,19 +18,20 @@ describe "Cache" do
       # then
       expect(result).to eq("def")
     end
-    it 'should cache a for only 5 seconds' do
+    it 'should cache an object for only 5 seconds' do
       # given
-      Cache.set_cache_ttl(2)
+      Cache.set_cache_ttl(5)
       cache_key = "abc"
       cache_string = "def"
     
       # when
       result = Cache.get_or_set(cache_key) { cache_string }
-      sleep 5
+      
+      Timecop.freeze(Time.now + 1)
       key_is_valid = Cache.key_is_valid?(cache_key)
       
       # then
-      expect(key_is_valid).to eq(true)
+      expect(key_is_valid).to eq(false)
     end
   end
 end
