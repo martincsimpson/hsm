@@ -1,9 +1,14 @@
-# Run the tests
-* github_token='<github_token>' rspec specs/*
+# Setup
+## Setup your access token
+* Set your github_token (you can use a personal access token) in docker-compose.yml
 
-# Run the web interface
-* github_token='<github_token>' ruby ui.rb
-* make a HTTP GET to /libraries/<language>
 
-# Run the cli
-* github_token='<github_token>' ruby cli.rb <language>
+# Run docker commands
+## Start the web UI on port 4567
+docker-compose up app
+
+## Run the tests
+docker-compose run app rspec specs/*
+
+## Get CLI listening
+docker-compose run app ruby cli.rb ruby
