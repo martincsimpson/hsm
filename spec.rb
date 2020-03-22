@@ -1,12 +1,6 @@
 require "graphql/client"
 require "graphql/client/http"
 require "rest-client"
-#require 'vcr'
-
-# VCR.configure do |config|
-#   config.cassette_library_dir = "fixtures/vcr_cassettes"
-#   config.hook_into :webmock
-# end
 
 class Library
   class Repository
@@ -44,7 +38,6 @@ end
 class GitHubSource
   HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
     def headers(context)
-      # Optionally set any HTTP headers
       { "Authorization": "bearer 9d6d7f1a32a5e1c5b74c8a7f7100318a5deabf2d" }
     end
   end  
@@ -55,29 +48,22 @@ class GitHubSource
 
   RepositoryQuery = Client.parse <<-'GRAPHQL'
     query {
-      viewer {
-        name
-        repositories(first: 50, privacy: PRIVATE, orderBy: { field:UPDATED_AT, direction:DESC}) {
-          nodes {
-            url
+      search(first: 50, query: "language:ruby sort:updated_at", type: REPOSITORY) {
+        repositoryCount
+        nodes {
+          ... on Repository {
             name
-            updatedAt
             owner {
-              login
+            	login
             }
+            updatedAt
             description
-            languages(first: 1) {
-              edges {
-                node {
-                  name
-                }
-              }
-            }
+            url
           }
         }
       }
-    }
-  GRAPHQL
+    } 
+    GRAPHQL
   def fetch
     response = Client.query(RepositoryQuery)
     
