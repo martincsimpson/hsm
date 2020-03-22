@@ -217,7 +217,7 @@ describe "GitHubSource" do
       results = source.fetch(language: "ruby")
       
       # then
-      expect(results.first.name).to eq(false)
+      expect(results.first.name).not_to be_empty
     end
   end  
 end
