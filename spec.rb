@@ -20,6 +20,13 @@ class Library
   end
   
   attr_accessor :source, :url, :username, :name, :description, :language
+  
+  def self.from_github(response)
+    library = Library.new
+    library.name = response.name
+    
+    library
+  end
 end
 
 describe "LibraryRepository" do
@@ -123,44 +130,58 @@ describe "GitHubSource" do
   context 'get data' do
     it 'should get test data' do
       VCR.use_cassette("github_data") do
-        HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
-          def headers(context)
-            # Optionally set any HTTP headers
-            { "Authorization": "bearer 9d6d7f1a32a5e1c5b74c8a7f7100318a5deabf2d" }
-          end
-        end  
+        # Given
+        class GitHubSource
+          HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
+            def headers(context)
+              # Optionally set any HTTP headers
+              { "Authorization": "bearer 9d6d7f1a32a5e1c5b74c8a7f7100318a5deabf2d" }
+            end
+          end  
 
-        Schema = GraphQL::Client.load_schema(HTTP)
+          Schema = GraphQL::Client.load_schema(HTTP)
 
-        Client = GraphQL::Client.new(schema: Schema, execute: HTTP)
+          Client = GraphQL::Client.new(schema: Schema, execute: HTTP)
 
-        RepositoryQuery = Client.parse <<-'GRAPHQL'
-          query {
-            viewer {
-              name
-              repositories(first: 50, privacy: PRIVATE, orderBy: { field:UPDATED_AT, direction:DESC}) {
-                nodes {
-                  url
-                  name
-                  updatedAt
-                  owner {
-                    login
-                  }
-                  description
-                  languages(first: 1) {
-                    edges {
-                      node {
-                        name
+          RepositoryQuery = Client.parse <<-'GRAPHQL'
+            query {
+              viewer {
+                name
+                repositories(first: 50, privacy: PRIVATE, orderBy: { field:UPDATED_AT, direction:DESC}) {
+                  nodes {
+                    url
+                    name
+                    updatedAt
+                    owner {
+                      login
+                    }
+                    description
+                    languages(first: 1) {
+                      edges {
+                        node {
+                          name
+                        }
                       }
                     }
                   }
                 }
               }
             }
-          }
-        GRAPHQL
-
-        result = Client.query(RepositoryQuery)
+          GRAPHQL
+          def fetch
+            response = Client.query(RepositoryQuery)
+            
+            response.data.viewer.repositories.nodes.map do |github_repository|
+              Library.from_github(github_repository)
+            end
+          end
+        end
+        
+        # When
+        results = GitHubSource.new.fetch
+        
+        # then
+        expect(results.count).to eq(50)
       end
     end
   end
