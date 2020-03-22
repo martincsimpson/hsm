@@ -10,7 +10,8 @@ class LibraryRepository
 end
 
 class Library
-  attr_accessor :source
+  attr_accessor :source, :url, :username, :name, :description, :language
+  
 end
 
 describe "LibraryRepository" do
