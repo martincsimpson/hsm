@@ -1,0 +1,105 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.github.com/graphql
+    body:
+      encoding: UTF-8
+      string: '{"query":"query GitHubSource__RepositoryQuery($queryString: String!)
+        {\n  search(first: 50, query: $queryString, type: REPOSITORY) {\n    repositoryCount\n    nodes
+        {\n      __typename\n      ... on Repository {\n        name\n        owner
+        {\n          __typename\n          login\n        }\n        updatedAt\n        description\n        url\n      }\n    }\n  }\n}","variables":{"queryString":"language:ruby
+        sort:updated_at"},"operationName":"GitHubSource__RepositoryQuery"}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/json
+      Authorization:
+      - bearer 9d6d7f1a32a5e1c5b74c8a7f7100318a5deabf2d
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 22 Mar 2020 14:17:21 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Server:
+      - GitHub.com
+      Status:
+      - 200 OK
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - repo
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v4
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4945'
+      X-Ratelimit-Reset:
+      - '1584887211'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval,
+        X-GitHub-Media-Type, Deprecation, Sunset
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Frame-Options:
+      - deny
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Content-Security-Policy:
+      - default-src 'none'
+      Vary:
+      - Accept-Encoding, Accept, X-Requested-With
+      X-Github-Request-Id:
+      - E748:2305:8635A7:AEA835:5E777370
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":{"search":{"repositoryCount":1848743,"nodes":[{"__typename":"Repository","name":"postit-solution","owner":{"__typename":"User","login":"justuswang"},"updatedAt":"2014-04-02T14:19:56Z","description":"The
+        solution to postit app ","url":"https://github.com/justuswang/postit-solution"},{"__typename":"Repository","name":"first_railsapp","owner":{"__typename":"User","login":"khovann"},"updatedAt":"2014-02-23T17:37:03Z","description":null,"url":"https://github.com/khovann/first_railsapp"},{"__typename":"Repository","name":"lindaz_world","owner":{"__typename":"User","login":"lindaz"},"updatedAt":"2014-02-23T20:01:17Z","description":null,"url":"https://github.com/lindaz/lindaz_world"},{"__typename":"Repository","name":"puzzles","owner":{"__typename":"User","login":"jfo"},"updatedAt":"2014-11-13T03:40:19Z","description":null,"url":"https://github.com/jfo/puzzles"},{"__typename":"Repository","name":"testmine","owner":{"__typename":"Organization","login":"bbc"},"updatedAt":"2019-11-05T18:04:36Z","description":"Test
+        Result Aggregator and Analysis Tool","url":"https://github.com/bbc/testmine"},{"__typename":"Repository","name":"sample_app","owner":{"__typename":"User","login":"Willy-git"},"updatedAt":"2014-03-25T14:59:45Z","description":"Sample_app
+        for RubyonRails Tutorial","url":"https://github.com/Willy-git/sample_app"},{"__typename":"Repository","name":"ajax_download","owner":{"__typename":"User","login":"gdpelican"},"updatedAt":"2014-02-25T02:02:04Z","description":"Proof
+        of concept app for handling a loading message during file download.","url":"https://github.com/gdpelican/ajax_download"},{"__typename":"Repository","name":"hopheads","owner":{"__typename":"User","login":"ryanczaja"},"updatedAt":"2015-04-21T10:49:33Z","description":"Craft
+        beer social networking platform","url":"https://github.com/ryanczaja/hopheads"},{"__typename":"Repository","name":"gilded-rose","owner":{"__typename":"User","login":"ejallday"},"updatedAt":"2014-02-25T22:27:39Z","description":null,"url":"https://github.com/ejallday/gilded-rose"},{"__typename":"Repository","name":"campusevents","owner":{"__typename":"User","login":"ancowart"},"updatedAt":"2014-02-25T00:44:55Z","description":"campus
+        events app for school","url":"https://github.com/ancowart/campusevents"},{"__typename":"Repository","name":"ncrash.github.com","owner":{"__typename":"User","login":"ncrash"},"updatedAt":"2017-01-03T06:45:57Z","description":null,"url":"https://github.com/ncrash/ncrash.github.com"},{"__typename":"Repository","name":"wwexship","owner":{"__typename":"Organization","login":"bazarka"},"updatedAt":"2018-09-06T11:02:42Z","description":null,"url":"https://github.com/bazarka/wwexship"},{"__typename":"Repository","name":"karmaville_performance","owner":{"__typename":"User","login":"lorenanicole"},"updatedAt":"2014-02-24T23:58:31Z","description":null,"url":"https://github.com/lorenanicole/karmaville_performance"},{"__typename":"Repository","name":"ruby_gol","owner":{"__typename":"User","login":"AlabamaMike"},"updatedAt":"2014-02-27T20:32:41Z","description":"Game
+        of Life in Ruby (TDD Style!)","url":"https://github.com/AlabamaMike/ruby_gol"},{"__typename":"Repository","name":"first_app","owner":{"__typename":"User","login":"ratneshj5"},"updatedAt":"2014-02-24T22:13:34Z","description":null,"url":"https://github.com/ratneshj5/first_app"},{"__typename":"Repository","name":"exception-handler","owner":{"__typename":"User","login":"amitm"},"updatedAt":"2014-02-24T23:34:10Z","description":null,"url":"https://github.com/amitm/exception-handler"},{"__typename":"Repository","name":"sample_app3","owner":{"__typename":"User","login":"cdrees19"},"updatedAt":"2014-02-25T07:51:56Z","description":null,"url":"https://github.com/cdrees19/sample_app3"},{"__typename":"Repository","name":"demoapp","owner":{"__typename":"User","login":"wts1085"},"updatedAt":"2014-02-26T03:47:47Z","description":"Twitter
+        for dogs","url":"https://github.com/wts1085/demoapp"},{"__typename":"Repository","name":"testproj","owner":{"__typename":"User","login":"br80"},"updatedAt":"2016-11-11T18:36:29Z","description":"test
+        project","url":"https://github.com/br80/testproj"},{"__typename":"Repository","name":"demo_app","owner":{"__typename":"User","login":"cocomode18"},"updatedAt":"2014-02-26T01:57:37Z","description":null,"url":"https://github.com/cocomode18/demo_app"},{"__typename":"Repository","name":"rcv","owner":{"__typename":"User","login":"travisdahlke"},"updatedAt":"2014-02-26T03:18:57Z","description":"Ranked
+        Choice Voting Tabulator","url":"https://github.com/travisdahlke/rcv"},{"__typename":"Repository","name":"aloft","owner":{"__typename":"Organization","login":"OTGApps"},"updatedAt":"2018-03-17T23:04:26Z","description":"aloft
+        is a beautiful way to see NOAA winds aloft forecasts on your iOS device. Useful
+        for skydivers and pilots!","url":"https://github.com/OTGApps/aloft"},{"__typename":"Repository","name":"blog","owner":{"__typename":"User","login":"blitzgigs"},"updatedAt":"2014-02-26T01:43:54Z","description":"getting
+        started with ruby on rails blog","url":"https://github.com/blitzgigs/blog"},{"__typename":"Repository","name":"news-reader","owner":{"__typename":"User","login":"jfkarim"},"updatedAt":"2014-02-26T16:58:31Z","description":null,"url":"https://github.com/jfkarim/news-reader"},{"__typename":"Repository","name":"multibytes","owner":{"__typename":"User","login":"tyouteis"},"updatedAt":"2014-02-26T02:53:48Z","description":null,"url":"https://github.com/tyouteis/multibytes"},{"__typename":"Repository","name":"big-data-analyser","owner":{"__typename":"User","login":"lxxdn"},"updatedAt":"2014-06-22T23:32:04Z","description":"a
+        project which analyse 4.2 G log each day","url":"https://github.com/lxxdn/big-data-analyser"},{"__typename":"Repository","name":"itcasts","owner":{"__typename":"User","login":"tiancikeji"},"updatedAt":"2014-06-20T02:20:18Z","description":"podcast","url":"https://github.com/tiancikeji/itcasts"},{"__typename":"Repository","name":"cancanAndDeviseSample","owner":{"__typename":"User","login":"NouranMahmoud"},"updatedAt":"2014-03-04T15:04:27Z","description":"this
+        sample uses cancan and devise gem for authentications and authorizations.","url":"https://github.com/NouranMahmoud/cancanAndDeviseSample"},{"__typename":"Repository","name":"demo_app","owner":{"__typename":"User","login":"kawaoso"},"updatedAt":"2014-02-27T13:44:43Z","description":null,"url":"https://github.com/kawaoso/demo_app"},{"__typename":"Repository","name":"demo_app","owner":{"__typename":"User","login":"Fasterbot"},"updatedAt":"2014-02-27T17:06:03Z","description":null,"url":"https://github.com/Fasterbot/demo_app"},{"__typename":"Repository","name":"vagrant-roles","owner":{"__typename":"User","login":"pataha"},"updatedAt":"2014-07-04T08:17:30Z","description":null,"url":"https://github.com/pataha/vagrant-roles"},{"__typename":"Repository","name":"summons_board","owner":{"__typename":"User","login":"yoshiori"},"updatedAt":"2014-03-08T10:58:40Z","description":"SummonsBoard''s
+        event scheduler","url":"https://github.com/yoshiori/summons_board"},{"__typename":"Repository","name":"demo_app","owner":{"__typename":"User","login":"chipmix"},"updatedAt":"2014-02-27T11:25:41Z","description":"Demo
+        app for the Ruby on Rails Tutorial","url":"https://github.com/chipmix/demo_app"},{"__typename":"Repository","name":"blog_app","owner":{"__typename":"User","login":"yarafan"},"updatedAt":"2014-03-07T07:03:06Z","description":null,"url":"https://github.com/yarafan/blog_app"},{"__typename":"Repository","name":"standalone-spinach","owner":{"__typename":"User","login":"rschellhorn"},"updatedAt":"2014-06-13T08:21:29Z","description":"A
+        sample Spinach test suite for testing non Ruby web applications","url":"https://github.com/rschellhorn/standalone-spinach"},{"__typename":"Repository","name":"first_app","owner":{"__typename":"User","login":"kamath16"},"updatedAt":"2014-02-27T06:51:23Z","description":"first
+        app ","url":"https://github.com/kamath16/first_app"},{"__typename":"Repository","name":"LDAP","owner":{"__typename":"User","login":"annaken"},"updatedAt":"2014-02-27T10:35:13Z","description":"Query
+        LDAP with ruby-based cli tools","url":"https://github.com/annaken/LDAP"},{"__typename":"Repository","name":"demo_app","owner":{"__typename":"User","login":"NickLinsky"},"updatedAt":"2014-02-27T09:19:37Z","description":"Demo
+        built with scaffolding","url":"https://github.com/NickLinsky/demo_app"},{"__typename":"Repository","name":"dictionarybot","owner":{"__typename":"User","login":"chances"},"updatedAt":"2014-02-24T04:51:15Z","description":"An
+        IRC bot that defines words.","url":"https://github.com/chances/dictionarybot"},{"__typename":"Repository","name":"openid-connect-engine","owner":{"__typename":"User","login":"jlaxson"},"updatedAt":"2014-10-20T04:29:20Z","description":null,"url":"https://github.com/jlaxson/openid-connect-engine"},{"__typename":"Repository","name":"lucky_ajax","owner":{"__typename":"User","login":"cprater"},"updatedAt":"2014-02-24T02:19:41Z","description":null,"url":"https://github.com/cprater/lucky_ajax"},{"__typename":"Repository","name":"soyf","owner":{"__typename":"Organization","login":"DirectedStudy2014Spring"},"updatedAt":"2014-04-19T12:41:03Z","description":"Testing
+        Facebook API with Rails","url":"https://github.com/DirectedStudy2014Spring/soyf"},{"__typename":"Repository","name":"gildedrose","owner":{"__typename":"User","login":"rwarbelow"},"updatedAt":"2014-02-24T05:21:57Z","description":null,"url":"https://github.com/rwarbelow/gildedrose"},{"__typename":"Repository","name":"kevin521_world","owner":{"__typename":"User","login":"kevin521"},"updatedAt":"2014-02-23T21:47:24Z","description":null,"url":"https://github.com/kevin521/kevin521_world"},{"__typename":"Repository","name":"skyscraper","owner":{"__typename":"User","login":"leullman"},"updatedAt":"2014-02-23T21:05:51Z","description":null,"url":"https://github.com/leullman/skyscraper"},{"__typename":"Repository","name":"skyscraper","owner":{"__typename":"User","login":"domminic"},"updatedAt":"2014-02-23T22:27:44Z","description":null,"url":"https://github.com/domminic/skyscraper"},{"__typename":"Repository","name":"pgproxy","owner":{"__typename":"User","login":"ebastien"},"updatedAt":"2015-01-01T22:12:26Z","description":null,"url":"https://github.com/ebastien/pgproxy"},{"__typename":"Repository","name":"mas","owner":{"__typename":"User","login":"matjack1"},"updatedAt":"2014-04-14T20:59:23Z","description":"Money
+        Advice Service search","url":"https://github.com/matjack1/mas"},{"__typename":"Repository","name":"first_app","owner":{"__typename":"User","login":"amar47shah"},"updatedAt":"2014-02-23T14:35:32Z","description":"First
+        App for MHartl''s Ruby on Rails Tutorial","url":"https://github.com/amar47shah/first_app"},{"__typename":"Repository","name":"flock-ruby","owner":{"__typename":"Organization","login":"castingclouds"},"updatedAt":"2015-10-21T15:03:56Z","description":null,"url":"https://github.com/castingclouds/flock-ruby"}]}}}'
+    http_version: null
+  recorded_at: Sun, 22 Mar 2020 14:17:21 GMT
+recorded_with: VCR 5.1.0

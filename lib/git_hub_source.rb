@@ -4,8 +4,9 @@ class GitHubSource
       { "Authorization": "bearer #{ENV['github_token']}" }
     end
   end  
-
-  Schema = GraphQL::Client.load_schema(HTTP)
+  
+  # Locking the schema version to the current version, which should cause a mismatch in the future should it change in the future
+  Schema = GraphQL::Client.load_schema(JSON.load(File.read("schema.json")))
 
   Client = GraphQL::Client.new(schema: Schema, execute: HTTP)
   

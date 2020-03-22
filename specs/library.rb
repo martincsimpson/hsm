@@ -101,7 +101,12 @@ describe "LibraryRepository" do
     
     it 'should raise a timeout error if the time is exceeded' do
       # given
-      source = GitHubSource.new
+      class LongRunningSource
+        def fetch language:
+          sleep 10
+        end
+      end
+      source = LongRunningSource.new
       repository = Library::Repository.new(sources: [source])
       
       # then
