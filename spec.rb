@@ -1,3 +1,12 @@
+require "graphql/client"
+require "graphql/client/http"
+require 'vcr'
+
+VCR.configure do |config|
+  config.cassette_library_dir = "fixtures/vcr_cassettes"
+  config.hook_into :webmock
+end
+
 class Library
   class Repository
   
@@ -11,12 +20,10 @@ class Library
   end
   
   attr_accessor :source, :url, :username, :name, :description, :language
-  
 end
 
 describe "LibraryRepository" do
   context 'get all libraries' do
-    
     it 'should return a library' do
       # given
       library = Library.new
@@ -109,5 +116,62 @@ describe "LibraryRepository" do
       expect(result.first.language).to eq("ruby")
     end
     
+  end
+end
+
+describe "GitHubSource" do
+  context 'get data' do
+    it 'should get test data' do
+      VCR.use_cassette("github_data") do
+        HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
+          def headers(context)
+            # Optionally set any HTTP headers
+            { "Authorization": "bearer 9d6d7f1a32a5e1c5b74c8a7f7100318a5deabf2d" }
+          end
+        end  
+
+        Schema = GraphQL::Client.load_schema(HTTP)
+
+        Client = GraphQL::Client.new(schema: Schema, execute: HTTP)
+
+        RepositoryQuery = Client.parse <<-'GRAPHQL'
+          query {
+            viewer {
+              name
+              repositories(first: 50, privacy: PRIVATE, orderBy: { field:UPDATED_AT, direction:DESC}) {
+                nodes {
+                  url
+                  name
+                  updatedAt
+                  owner {
+                    login
+                  }
+                  description
+                  languages(first: 1) {
+                    edges {
+                      node {
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        GRAPHQL
+
+        result = Client.query(RepositoryQuery)
+      end
+    end
+  end
+  
+  context 'get all libraries' do
+    it 'should fetch all libraries from github' do
+      VCR.use_cassette("github_data") do
+        # given
+        # when
+        # then
+      end      
+    end
   end
 end
