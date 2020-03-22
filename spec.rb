@@ -208,6 +208,17 @@ describe "GitHubSource" do
       # then
       expect(results.count).to eq(50)
     end
+    
+    it 'should contain the name paramter' do
+      # given
+      source = GitHubSource.new
+      
+      # when
+      results = source.fetch(language: "ruby")
+      
+      # then
+      expect(results.first.name).to eq(false)
+    end
   end  
 end
 
