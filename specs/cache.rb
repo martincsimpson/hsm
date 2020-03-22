@@ -27,7 +27,7 @@ describe "Cache" do
       # when
       result = Cache.get_or_set(cache_key) { cache_string }
       
-      Timecop.freeze(Time.now + 1)
+      Timecop.freeze(Time.now + 10)
       key_is_valid = Cache.key_is_valid?(cache_key)
       
       # then
