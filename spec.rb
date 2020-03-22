@@ -21,6 +21,8 @@ class Library
     library.source = :github
     library.name = response.name
     library.url = response.url
+    library.username = response.owner.login
+    library.description = response.description
     library
   end
   
