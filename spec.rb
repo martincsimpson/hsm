@@ -44,11 +44,11 @@ class GitHubSource
 
   Schema = GraphQL::Client.load_schema(HTTP)
 
-  Client = GraphQL::Client.new(schema: Schema, execute: HTTP)
-
+  Client = GraphQL::Client.new(schema: Schema, execute: HTTP)    
+  
   RepositoryQuery = Client.parse <<-'GRAPHQL'
-    query {
-      search(first: 50, query: "language:ruby sort:updated_at", type: REPOSITORY) {
+    query($queryString: String!) {
+      search(first: 50, query: $queryString, type: REPOSITORY) {
         repositoryCount
         nodes {
           ... on Repository {
@@ -63,10 +63,15 @@ class GitHubSource
         }
       }
     } 
-    GRAPHQL
-  def fetch
-    response = Client.query(RepositoryQuery)
+  GRAPHQL
     
+  def fetch language:
+    raise "Language is required" if language.nil?
+    
+    query_string = "language:#{language} sort:updated_at"
+
+    response = Client.query(RepositoryQuery, variables: { queryString: query_string})
+        
     response.data.search.nodes.map do |github_repository|
       Library.from_github(github_repository)
     end
@@ -75,11 +80,14 @@ end
 
 class GitLabSource
   def fetch language: nil
+    raise "Language is required" if language.nil?
+    
     query_params = {
       order_by: "updated_at",
-      per_page: 50
+      per_page: 50,
+      with_programming_language: language
     }          
-    query_params[:with_programming_language] = language if language
+    
     raw_response = RestClient.get "https://gitlab.com/api/v4/projects", { params: query_params }
       
     JSON.parse(raw_response).map do |gitlab_repository|
@@ -193,7 +201,7 @@ describe "GitHubSource" do
       source = GitHubSource.new
       
       # When
-      results = source.fetch
+      results = source.fetch(language: "ruby")
       
       # then
       expect(results.count).to eq(50)
@@ -208,7 +216,7 @@ describe "GitLabSource" do
       source = GitLabSource.new
       
       # When
-      results = source.fetch
+      results = source.fetch(language: "ruby")
       
       # then
       expect(results.count).to eq(50)
