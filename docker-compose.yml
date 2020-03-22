@@ -8,4 +8,4 @@ services:
     ports:
       - "4567:4567"
     environment:
-      - github_token=7036a2c8017f1075fa6d9cf411e56aef5f578188
+      - github_token=<github_access_token>
