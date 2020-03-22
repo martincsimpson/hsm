@@ -1,3 +1,14 @@
+class LibraryRepository
+  
+  def initialize(source: )
+    @source = source
+  end
+  
+  def all
+    @source.fetch
+  end
+end
+
 class Library
 end
 
@@ -6,13 +17,10 @@ describe "LibraryRepository" do
     
     it 'should return a library' do
       # given
-      class LibraryRepository
-        def all
-          [Library.new]
-        end
-      end
+      library = Library.new
+      source = double("GitHubLibrarySource", name: :github, fetch: [library])
       
-      repository = LibraryRepository.new
+      repository = LibraryRepository.new(source: source)
     
       # when
       result = repository.all
