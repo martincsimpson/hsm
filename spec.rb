@@ -119,7 +119,7 @@ describe "LibraryRepository" do
 
     it 'should return a library with a description' do
       # given
-      library = double("Library", name: "library")
+      library = double("Library", description: "description")
       source = double("GitHubLibrarySource", name: :github, fetch: [library])
       
       class LibraryRepository
