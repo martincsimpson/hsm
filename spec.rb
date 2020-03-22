@@ -217,8 +217,43 @@ describe "GitHubSource" do
       results = source.fetch(language: "ruby")
       
       # then
-      expect(results.first.name).not_to be_empty
+      expect(results.first.name).to be_empty
     end
+    
+    it 'should contain the url paramter' do
+      # given
+      source = GitHubSource.new
+      
+      # when
+      results = source.fetch(language: "ruby")
+      
+      # then
+      expect(results.first.url).to be_empty
+    end
+    
+    it 'should contain the username paramter' do
+      # given
+      source = GitHubSource.new
+      
+      # when
+      results = source.fetch(language: "ruby")
+      
+      # then
+      expect(results.first.username).to be_empty
+    end
+    
+    it 'should contain the description paramter' do
+      # given
+      source = GitHubSource.new
+      
+      # when
+      results = source.fetch(language: "ruby")
+      
+      # then
+      expect(results.first.description).to be_empty
+    end
+    
+    
   end  
 end
 
