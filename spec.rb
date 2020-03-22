@@ -140,6 +140,30 @@ describe "LibraryRepository" do
       # then
       expect(result.first.description).to eq("description")
     end
+
+    it 'should return a library with a language' do
+      # given
+      library = double("Library", description: "description")
+      source = double("GitHubLibrarySource", name: :github, fetch: [library])
+      
+      class LibraryRepository
+        def initialize source:
+          @source = source
+        end
+        
+        def all
+          @source.fetch
+        end
+      end
+      
+      repository = LibraryRepository.new(source: source)
+
+      # when
+      result = repository.all
+    
+      # then
+      expect(result.first.language).to eq("ruby")
+    end
     
   end
 end
