@@ -10,6 +10,7 @@ class LibraryRepository
 end
 
 class Library
+  attr_accessor :source
 end
 
 describe "LibraryRepository" do
@@ -32,18 +33,7 @@ describe "LibraryRepository" do
     it 'should return a library from github' do
       # given
       library = double("Library", source: :github)
-      source = double("GitHubLibrarySource", name: :github, fetch: [library])
-      
-      class LibraryRepository
-        def initialize source:
-          @source = source
-        end
-        
-        def all
-          @source.fetch
-        end
-      end
-      
+      source = double("GitHubLibrarySource", name: :github, fetch: [library])      
       repository = LibraryRepository.new(source: source)
 
       # when
@@ -56,18 +46,7 @@ describe "LibraryRepository" do
     it 'should return a library with a url' do
       # given
       library = double("Library", url: "https://www.google.com")
-      source = double("GitHubLibrarySource", name: :github, fetch: [library])
-      
-      class LibraryRepository
-        def initialize source:
-          @source = source
-        end
-        
-        def all
-          @source.fetch
-        end
-      end
-      
+      source = double("GitHubLibrarySource", name: :github, fetch: [library])      
       repository = LibraryRepository.new(source: source)
 
       # when
@@ -80,18 +59,7 @@ describe "LibraryRepository" do
     it 'should return a library with a username' do
       # given
       library = double("Library", username: "martincsimpson")
-      source = double("GitHubLibrarySource", name: :github, fetch: [library])
-      
-      class LibraryRepository
-        def initialize source:
-          @source = source
-        end
-        
-        def all
-          @source.fetch
-        end
-      end
-      
+      source = double("GitHubLibrarySource", name: :github, fetch: [library])      
       repository = LibraryRepository.new(source: source)
 
       # when
@@ -105,17 +73,6 @@ describe "LibraryRepository" do
       # given
       library = double("Library", name: "library")
       source = double("GitHubLibrarySource", name: :github, fetch: [library])
-      
-      class LibraryRepository
-        def initialize source:
-          @source = source
-        end
-        
-        def all
-          @source.fetch
-        end
-      end
-      
       repository = LibraryRepository.new(source: source)
 
       # when
@@ -129,17 +86,6 @@ describe "LibraryRepository" do
       # given
       library = double("Library", description: "description")
       source = double("GitHubLibrarySource", name: :github, fetch: [library])
-      
-      class LibraryRepository
-        def initialize source:
-          @source = source
-        end
-        
-        def all
-          @source.fetch
-        end
-      end
-      
       repository = LibraryRepository.new(source: source)
 
       # when
@@ -153,17 +99,6 @@ describe "LibraryRepository" do
       # given
       library = double("Library", language: "ruby")
       source = double("GitHubLibrarySource", name: :github, fetch: [library])
-      
-      class LibraryRepository
-        def initialize source:
-          @source = source
-        end
-        
-        def all
-          @source.fetch
-        end
-      end
-      
       repository = LibraryRepository.new(source: source)
 
       # when
