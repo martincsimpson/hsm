@@ -253,7 +253,6 @@ describe "GitHubSource" do
       expect(results.first.description).not_to be_empty
     end
     
-    
   end  
 end
 
@@ -269,5 +268,50 @@ describe "GitLabSource" do
       # then
       expect(results.count).to eq(50)
     end
+    
+    it 'should contain the name paramter' do
+      # given
+      source = GitLabSource.new
+      
+      # when
+      results = source.fetch(language: "ruby")
+      
+      # then
+      expect(results.first.name).to be_empty
+    end
+    
+    it 'should contain the url paramter' do
+      # given
+      source = GitLabSource.new
+      
+      # when
+      results = source.fetch(language: "ruby")
+      
+      # then
+      expect(results.first.url).to be_empty
+    end
+    
+    it 'should contain the username paramter' do
+      # given
+      source = GitLabSource.new
+      
+      # when
+      results = source.fetch(language: "ruby")
+      
+      # then
+      expect(results.first.username).to be_empty
+    end
+    
+    it 'should contain the description paramter' do
+      # given
+      source = GitLabSource.new
+      
+      # when
+      results = source.fetch(language: "ruby")
+      
+      # then
+      expect(results.first.description).to be_empty
+    end
+    
   end  
 end
