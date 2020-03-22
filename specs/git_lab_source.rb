@@ -8,7 +8,8 @@ require './lib/git_lab_source'
 require 'vcr'
 
 VCR.configure do |c|
-    c.cassette_library_dir = 'fixtures/vcr_cassettes/'
+    c.cassette_library_dir = './fixtures/vcr_cassettes/'
+    c.hook_into :webmock
 end
 
 describe "GitLabSource" do
