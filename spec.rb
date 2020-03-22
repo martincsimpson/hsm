@@ -1,11 +1,11 @@
 require "graphql/client"
 require "graphql/client/http"
-require 'vcr'
+#require 'vcr'
 
-VCR.configure do |config|
-  config.cassette_library_dir = "fixtures/vcr_cassettes"
-  config.hook_into :webmock
-end
+# VCR.configure do |config|
+#   config.cassette_library_dir = "fixtures/vcr_cassettes"
+#   config.hook_into :webmock
+# end
 
 class Library
   class Repository
@@ -127,73 +127,75 @@ describe "LibraryRepository" do
   end
 end
 
-describe "GitHubSource" do
-  context 'get data' do
-    it 'should get test data' do
-      VCR.use_cassette("github_data") do
-        # Given
-        class GitHubSource
-          HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
-            def headers(context)
-              # Optionally set any HTTP headers
-              { "Authorization": "bearer 9d6d7f1a32a5e1c5b74c8a7f7100318a5deabf2d" }
-            end
-          end  
+class GitHubSource
+  HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
+    def headers(context)
+      # Optionally set any HTTP headers
+      { "Authorization": "bearer 9d6d7f1a32a5e1c5b74c8a7f7100318a5deabf2d" }
+    end
+  end  
 
-          Schema = GraphQL::Client.load_schema(HTTP)
+  Schema = GraphQL::Client.load_schema(HTTP)
 
-          Client = GraphQL::Client.new(schema: Schema, execute: HTTP)
+  Client = GraphQL::Client.new(schema: Schema, execute: HTTP)
 
-          RepositoryQuery = Client.parse <<-'GRAPHQL'
-            query {
-              viewer {
-                name
-                repositories(first: 50, privacy: PRIVATE, orderBy: { field:UPDATED_AT, direction:DESC}) {
-                  nodes {
-                    url
-                    name
-                    updatedAt
-                    owner {
-                      login
-                    }
-                    description
-                    languages(first: 1) {
-                      edges {
-                        node {
-                          name
-                        }
-                      }
-                    }
-                  }
+  RepositoryQuery = Client.parse <<-'GRAPHQL'
+    query {
+      viewer {
+        name
+        repositories(first: 50, privacy: PRIVATE, orderBy: { field:UPDATED_AT, direction:DESC}) {
+          nodes {
+            url
+            name
+            updatedAt
+            owner {
+              login
+            }
+            description
+            languages(first: 1) {
+              edges {
+                node {
+                  name
                 }
               }
             }
-          GRAPHQL
-          def fetch
-            response = Client.query(RepositoryQuery)
-            
-            response.data.viewer.repositories.nodes.map do |github_repository|
-              Library.from_github(github_repository)
-            end
-          end
-        end
+          }
+        }
+      }
+    }
+  GRAPHQL
+  def fetch
+    response = Client.query(RepositoryQuery)
+    
+    response.data.viewer.repositories.nodes.map do |github_repository|
+      Library.from_github(github_repository)
+    end
+  end
+end
+
+describe "GitHubSource" do
+  context 'get data' do
+    it 'should get test data' do
+      # VCR.use_cassette("github_data") do
+        # Given
+        source = GitHubSource.new
         
         # When
-        results = GitHubSource.new.fetch
+        results = source.fetch
         
         # then
         expect(results.count).to eq(7)
-      end
+      # end
     end
   end
   
   context 'get all libraries' do
     it 'should fetch all libraries from github' do
-      VCR.use_cassette("github_data") do
+      # VCR.use_cassette("github_data") do
         # given
         # when
         # then
-      end      
+      # end
     end
   end
 end
