@@ -23,7 +23,8 @@ describe "LibraryRepository" do
     
     it 'should return a library from github' do
       # given
-      source = double("GitHubLibrarySource", name: :github, fetch: [Library.new])
+      library = double("Library", source: :github)
+      source = double("GitHubLibrarySource", name: :github, fetch: [library])
       
       class LibraryRepository
         def initialize source:
