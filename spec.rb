@@ -23,8 +23,9 @@ class Library
   
   def self.from_github(response)
     library = Library.new
+    library.source = :github
     library.name = response.name
-    
+    library.url = response.url
     library
   end
 end
@@ -181,7 +182,7 @@ describe "GitHubSource" do
         results = GitHubSource.new.fetch
         
         # then
-        expect(results.count).to eq(50)
+        expect(results.count).to eq(7)
       end
     end
   end
