@@ -5,8 +5,9 @@ class Library
       @sources = sources
     end
   
-    def all
-      @sources.map { |s| s.fetch }.flatten
+    def all language:
+      return "Language Is Required" if language.nil?
+      @sources.map { |s| s.fetch(language: language) }.flatten
     end
   end
   

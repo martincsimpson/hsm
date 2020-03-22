@@ -16,7 +16,7 @@ describe "LibraryRepository" do
       repository = Library::Repository.new(sources: [source])
     
       # when
-      result = repository.all
+      result = repository.all(language: "ruby")
     
       # then
       expect(result.first).to be_instance_of(Library)
@@ -29,7 +29,7 @@ describe "LibraryRepository" do
       repository = Library::Repository.new(sources: [source])
 
       # when
-      result = repository.all
+      result = repository.all(language: "ruby")
     
       # then
       expect(result.first.source).to eq(:github)
@@ -42,7 +42,7 @@ describe "LibraryRepository" do
       repository = Library::Repository.new(sources: [source])
 
       # when
-      result = repository.all
+      result = repository.all(language: "ruby")
     
       # then
       expect(result.first.url).to eq("https://www.google.com")
@@ -55,7 +55,7 @@ describe "LibraryRepository" do
       repository = Library::Repository.new(sources: [source])
 
       # when
-      result = repository.all
+      result = repository.all(language: "ruby")
     
       # then
       expect(result.first.username).to eq("martincsimpson")
@@ -68,7 +68,7 @@ describe "LibraryRepository" do
       repository = Library::Repository.new(sources: [source])
 
       # when
-      result = repository.all
+      result = repository.all(language: "ruby")
     
       # then
       expect(result.first.name).to eq("library")
@@ -81,7 +81,7 @@ describe "LibraryRepository" do
       repository = Library::Repository.new(sources: [source])
 
       # when
-      result = repository.all
+      result = repository.all(language: "ruby")
     
       # then
       expect(result.first.description).to eq("description")
@@ -94,7 +94,7 @@ describe "LibraryRepository" do
       repository = Library::Repository.new(sources: [source])
 
       # when
-      result = repository.all
+      result = repository.all(language: "ruby")
     
       # then
       expect(result.first.language).to eq("ruby")
