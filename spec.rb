@@ -143,7 +143,7 @@ describe "LibraryRepository" do
 
     it 'should return a library with a language' do
       # given
-      library = double("Library", description: "description")
+      library = double("Library", language: "ruby")
       source = double("GitHubLibrarySource", name: :github, fetch: [library])
       
       class LibraryRepository
