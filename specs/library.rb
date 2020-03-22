@@ -12,7 +12,6 @@ describe "LibraryRepository" do
       # given
       library = Library.new
       source = double("GitHubLibrarySource", name: :github, fetch: [library])
-      
       repository = Library::Repository.new(sources: [source])
     
       # when
@@ -104,8 +103,6 @@ describe "LibraryRepository" do
       # given
       source = GitHubSource.new
       repository = Library::Repository.new(sources: [source])
-      
-      # when
       
       # then
       expect { repository.all(language: "ruby", timeout: 1) }.to raise_error(Timeout::Error)

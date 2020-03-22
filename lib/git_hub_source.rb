@@ -1,7 +1,7 @@
 class GitHubSource
   HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
     def headers(context)
-      { "Authorization": "bearer 9d6d7f1a32a5e1c5b74c8a7f7100318a5deabf2d" }
+      { "Authorization": "bearer #{ENV['github_token']}" }
     end
   end  
 
