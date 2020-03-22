@@ -87,6 +87,22 @@ class GitHubSource
   end
 end
 
+class GitLabSource
+  def fetch language: nil
+    query_params = {
+      order_by: "updated_at",
+      per_page: 50
+    }          
+    query_params[:with_programming_language] = language if language
+    raw_response = RestClient.get "https://gitlab.com/api/v4/projects", { params: query_params }
+      
+    JSON.parse(raw_response).map do |gitlab_repository|
+      Library.from_gitlab(gitlab_repository)
+    end
+  end
+end
+
+
 describe "LibraryRepository" do
   context 'get all libraries' do
     it 'should return a library' do
@@ -201,22 +217,7 @@ end
 
 describe "GitLabSource" do
   context 'get data' do
-    it 'should get test data' do
-      class GitLabSource
-        def fetch language: nil
-          query_params = {
-            order_by: "updated_at",
-            per_page: 50
-          }          
-          query_params[:with_programming_language] = language if language
-          raw_response = RestClient.get "https://gitlab.com/api/v4/projects", { params: query_params }
-            
-          JSON.parse(raw_response).map do |gitlab_repository|
-            Library.from_gitlab(gitlab_repository)
-          end
-        end
-      end
-      
+    it 'should get test data' do      
       # Given
       source = GitLabSource.new
       
