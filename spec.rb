@@ -116,6 +116,30 @@ describe "LibraryRepository" do
       # then
       expect(result.first.name).to eq("library")
     end
+
+    it 'should return a library with a description' do
+      # given
+      library = double("Library", name: "library")
+      source = double("GitHubLibrarySource", name: :github, fetch: [library])
+      
+      class LibraryRepository
+        def initialize source:
+          @source = source
+        end
+        
+        def all
+          @source.fetch
+        end
+      end
+      
+      repository = LibraryRepository.new(source: source)
+
+      # when
+      result = repository.all
+    
+      # then
+      expect(result.first.description).to eq("description")
+    end
     
   end
 end
