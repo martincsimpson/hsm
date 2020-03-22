@@ -7,7 +7,7 @@ class Library
     end
   
     # Make a call to the sources with the language param and concatenate and flatten them
-    def all language:
+    def all language:, timeout: 30
       return "Language Is Required" if language.nil?
       
       # We are doing the timeout here instead of in the HTTP librarys because the timeout settings
@@ -15,7 +15,7 @@ class Library
       # so we wrap everthing in one timeout here to guarantee we get 30 seconds.
       # Usually, using ruby timeout is bad because it is run in a separate thread and can interrupt execution at any point
       # making the possibility of data corruption, and surpirous errors high. However, for this scenario it is sufficient.
-      Timeout::timeout(30) do
+      Timeout::timeout(timeout) do
         @sources.map { |s| s.fetch(language: language) }.flatten
       end
     end
