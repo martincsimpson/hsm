@@ -69,5 +69,29 @@ describe "LibraryRepository" do
       expect(result.first.url).to eq("https://www.google.com")
     end
     
+    it 'should return a library with a username' do
+      # given
+      library = double("Library", username: "martincsimpson")
+      source = double("GitHubLibrarySource", name: :github, fetch: [library])
+      
+      class LibraryRepository
+        def initialize source:
+          @source = source
+        end
+        
+        def all
+          @source.fetch
+        end
+      end
+      
+      repository = LibraryRepository.new(source: source)
+
+      # when
+      result = repository.all
+    
+      # then
+      expect(result.first.username).to eq("martincsimpson")
+    end
+    
   end
 end
