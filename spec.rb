@@ -5,12 +5,12 @@ require "rest-client"
 class Library
   class Repository
   
-    def initialize(source:)
-      @source = source
+    def initialize(sources:)
+      @sources = sources
     end
   
     def all
-      @source.fetch
+      @sources.map { |s| s.fetch }.flatten
     end
   end
   
@@ -44,7 +44,7 @@ class GitHubSource
 
   Schema = GraphQL::Client.load_schema(HTTP)
 
-  Client = GraphQL::Client.new(schema: Schema, execute: HTTP)    
+  Client = GraphQL::Client.new(schema: Schema, execute: HTTP)
   
   RepositoryQuery = Client.parse <<-'GRAPHQL'
     query($queryString: String!) {
