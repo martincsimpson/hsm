@@ -47,6 +47,8 @@ GEM
       rack (~> 2.0)
       rack-protection (= 2.0.8.1)
       tilt (~> 2.0)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
     timecop (0.9.1)
@@ -55,6 +57,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.6)
+    unicode-display_width (1.7.0)
     vcr (5.1.0)
     webmock (3.8.3)
       addressable (>= 2.3.6)
@@ -69,6 +72,7 @@ DEPENDENCIES
   graphql-client
   rest-client
   sinatra
+  terminal-table
   timecop
   vcr
   webmock
